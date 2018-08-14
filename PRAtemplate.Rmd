@@ -19,7 +19,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library('kableExtra')
 library('magrittr')
-library('crayon')
 ```
 
 Express Pest Risk Analysis: *(Pest name)*
@@ -214,20 +213,20 @@ Q12_1 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity in
 *Consider the negative impact the pest may have on categories of ecosystem services (examples of ecosystem service under each main category are detailed in the highlighted box). The categories of ecosystem services are based on the [Millennium Ecosystem Assessment (2005)](http://www.unep.org/maweb/documents/document.356.aspx.pdf).*
 
 ```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
-cat("Examples of ecosystem services to consider under each category include:\n\n*Provisioning services\t\t\t\t\t\t\t\t*Supporting services\n
-\tFresh water\t\t\t\t\t\t\t\t\t\t\tNutrient cycling\n
-\tGenetic resources\t\t\t\t\t\t\t\t\tPrimary production\n
-\tFood production (crop and livestock etc.)\t\t\tHabitat stability\n
-\tCommodity production (fibre, timber etc.)\n
-*Regulating services\t\t\t\t\t\t\t\t*Cultural services\n
-\tSoil formation\t\t\t\t\t\t\t\t\t\tAesthetic experiences\n
-\tPollination\t\t\t\t\t\t\t\t\t\t\tCultural heritage\n
-\tNatural hazard regulation (fire, erosion, flooding)\tTourism\n
-\tWater regulation\t\t\t\t\t\t\t\t\tRecreation (fishing, nature enjoyment etc.)\n
-\tBiodiversity\t\t\t\t\t\t\t\t\t\tSpiritual wellbeing\n
-\tDecomposition\n
-\tPhotosynthesis and primary production\n
-\tAir quality regulation\n
+cat("Examples of ecosystem services to consider under each category include:\n\n*Provisioning services\t\t\t\t\t\t\t\t*Supporting services
+\tFresh water\t\t\t\t\t\t\t\t\t\t\tNutrient cycling
+\tGenetic resources\t\t\t\t\t\t\t\t\tPrimary production
+\tFood production (crop and livestock etc.)\t\t\tHabitat stability
+\tCommodity production (fibre, timber etc.)
+*Regulating services\t\t\t\t\t\t\t\t*Cultural services
+\tSoil formation\t\t\t\t\t\t\t\t\t\tAesthetic experiences
+\tPollination\t\t\t\t\t\t\t\t\t\t\tCultural heritage
+\tNatural hazard regulation (fire, erosion, flooding)\tTourism
+\tWater regulation\t\t\t\t\t\t\t\t\tRecreation (fishing, nature enjoyment etc.)
+\tBiodiversity\t\t\t\t\t\t\t\t\t\tSpiritual wellbeing
+\tDecomposition
+\tPhotosynthesis and primary production
+\tAir quality regulation
 \tPest and disease regulation"
 )
 ```
@@ -367,7 +366,18 @@ Acidification (*yes/no*) Land use change (*yes/no*) Other (*please specify*)
 
   III) Consider the influence of projected climate change scenarios on the pest.
 
-*Specifically consider the influence of climate change on entry, establishment, spread and impact of the pest in the PRA area. In particular, consider the following aspects*
+*Specifically consider the influence of climate change on entry, establishment, spread and impact of the pest in the PRA area.*
+
+```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
+cat("In particular, consider the following aspects:\n
+*Pathways (see point 8)\t\t\t\t\t\t\t*Spread
+*Establishment\t\t\t\t\t\t\t\t\t\tDensity dependent dispersal
+\tDay degree requirements\t\t\t\t\t\t\tExtreme weather events
+\tClimate limitations\t\t\t\t\t\t\t*Impact
+\tChanges in reproduction/growth\t\t\t\t\tIncreased fitness
+\tInter-specific competition\t\t\t\t\t\tPer capita effects"
+)
+```
 
 (@) Overall assessment of risk:
 
@@ -380,6 +390,40 @@ Acidification (*yes/no*) Land use change (*yes/no*) Other (*please specify*)
   I) Describe potential measures for relevant pathways and their expected effectiveness on preventing introduction (entry & establishment) and / or spread.
 
 *If possible, specify prospects of eradication or containment in case of an outbreak. Indicate effectiveness and feasibility of the measures*
+
+```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
+cat('As described in PM 5/3 possible options for phytosanitary measures include 
+Options at the place of production
+*\tDetection of the pest at the place of production by inspection or testing
+*\tPrevention of infestation of the commodity at the place of production (treatment, resistant cultivars,
+\tgrowing the crop in specified conditions, harvest at certain times of the year or growth stages,
+\tproduction in a certification scheme)
+*\tEstablishment and maintenance of pest freedom of a crop, place of production or area
+Options after harvest, at pre-clearance or during transport
+*\tDetection of the pest in consignments by inspection or testing
+*\tRemoval of the pest from the consignment by treatment or other phytosanitary procedures
+\t(remove certain parts of the plant or plant product, handling and packing methods,
+\tspecific conditions or treatments during transport)
+Options that can be implemented after entry of consignments
+*\tDetection during post-entry quarantine
+*\tConsider whether consignments that may be infested be accepted without risk for certain end uses,
+\tlimited distribution in the PRA area, or limited periods of entry, and can such limitations
+\tbe applied in practice 
+Prohibition
+Surveillance, eradication, containment')
+```
+
+```{r echo = F, eval = T}
+Q17_1 <- read.csv('./Resources/Tables/measures.csv',
+               header = T,
+               stringsAsFactors = F)
+kable(Q17_1, col.names = c('Possible pathways (in order of importance)',
+                           'Measures identified',
+                           'Cost effectiveness of measures')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(c(2,3), width = '17em')
+```
 
   II) Management measures for eradication, containment and control
 
