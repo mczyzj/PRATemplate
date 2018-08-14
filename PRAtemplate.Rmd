@@ -1,6 +1,12 @@
 ---
-title: "Pest Risk Assessment"
-author: "Michal Czyz"
+title: "Pest Risk Assessment for"
+subtitle: "Pest name"
+author: 
+  - "Michal Czyz"
+institute: "Institute of Magick Research"
+keywords:
+  - "Pest Risk Assessment"
+  - "EPPO"
 date: "August 9, 2018"
 output:
   html_document:
@@ -128,7 +134,8 @@ cat("Repeat table for each pathway considered.")
 
 ```{r echo = F, eval = T}
 Q9 <- data.frame(Rating = c('Rating of the likelihood of establishment in
-                            the natural environment', 'Rating of uncertainty'),
+                            the natural environment',
+                            'Rating of uncertainty'),
                  Low = c('X',''),      #put X in correct level between ''
                  Moderate = c('','X'), #first place is for likelihood, second
                  High = c('',''))      #for uncetainity
@@ -144,7 +151,8 @@ Q9 <- data.frame(Rating = c('Rating of the likelihood of establishment in
 
 ```{r echo = F, eval = T}
 Q10 <- data.frame(Rating = c('Rating of the likelihood of establishment in
-                            the managed environment', 'Rating of uncertainty'),
+                            the managed environment',
+                            'Rating of uncertainty'),
                  Low = c('',''),      #put X in correct level between '' 
                  Moderate = c('',''), #first place is for likelihood, second
                  High = c('',''))     #for uncetainity (see example Q9)
@@ -167,7 +175,8 @@ Q10 <- data.frame(Rating = c('Rating of the likelihood of establishment in
 
 ```{r echo = F, eval = T}
 Q11 <- data.frame(Rating = c('Rating of the magnitude of spread in
-                            the PRA area', 'Rating of uncertainty'),
+                            the PRA area',
+                            'Rating of uncertainty'),
                  Low = c('',''),      #put X in correct level between '' 
                  Moderate = c('',''), #first place is for magnitude, second
                  High = c('',''))     #for uncetainity (see example Q9)
@@ -187,12 +196,13 @@ Q11 <- data.frame(Rating = c('Rating of the magnitude of spread in
 *Briefly describe the existing control measures applied against the pest*
 
 ```{r echo = F, eval = T}
-Q12.1 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity in
-                            the current area of distirbution', 'Rating of uncertainty'),
+Q12_1 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity in
+                               the current area of distirbution',
+                               'Rating of uncertainty'),
                  Low = c('',''),      #put X in correct level between '' 
                  Moderate = c('',''), #first place is for magnitude, second
                  High = c('',''))     #for uncetainity (see example Q9)
- kable(Q12.1, align = c('l', 'c', 'c', 'c')) %>%
+ kable(Q12_1, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
   column_spec(2:4, width = '8em', bold = T) %>%
@@ -222,9 +232,52 @@ cat("Examples of ecosystem services to consider under each category include:\n\n
 )
 ```
 
+```{r echo = F, eval = T}
+Q12_02 <- read.csv('./Resources/Tables/eco_services.csv',
+               header = T,
+               stringsAsFactors = F)
+
+kable(Q12_02, col.names = c('Ecosystem service',
+                            'Does the pest impact on this Ecosystem service?',
+                            'Short description of impact',
+                            'Reference')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(1, width = '10em') %>%
+  column_spec(c(2,4), width = '12em')
+```
+
+```{r echo = F, eval = T}
+Q12_2A <- data.frame(Rating = c('Rating of magnitude of impact on ecosystem
+                                services in the current area of distirbution',
+                                'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q12_2A, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
+
   III) Socio-economic impact**
 
 *(e.g. evaluate socio-economic impacts relating to control/management costs, costs relating to habitat degradation and agriculture, forestry and fisheries (i.e. reduction in leisure activities, real estate prices, and yields etc.)*
+
+```{r echo = F, eval = T}
+Q12_3 <- data.frame(Rating = c('Rating of magnitude of socio-economic impact in
+                               the current area of distirbution',
+                               'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q12_3, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
 
 (@) Potential impact in the PRA area:
 
@@ -238,13 +291,55 @@ Will impacts be largely the same as in the current area of distribution? *Yes/No
 
 **If No,**
 
+```{r echo = F, eval = T}
+Q13_1 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity in
+                               the area of potential establishment',
+                               'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q13_1, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
+
  II) Potential impact on ecosystem services in the PRA area
 
 **If No,**
 
+```{r echo = F, eval = T}
+Q13_2 <- data.frame(Rating = c('Rating of magnitude of impact on ecosystem
+                               services in the area of potential establishment',
+                               'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q13_2, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
+
  III) Potential socio-economic impact in the PRA area
 
 **If No,**
+
+```{r echo = F, eval = T}
+Q13_1 <- data.frame(Rating = c('Rating of magnitude of socio-economic impact on
+                               biodiversity in the area of potential establishment',
+                               'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q12_1, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
 
 (@) Identification of the endangered area:
 
