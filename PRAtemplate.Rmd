@@ -13,6 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library('kableExtra')
 library('magrittr')
+library('crayon')
 ```
 
 Express Pest Risk Analysis: *(Pest name)*
@@ -98,7 +99,22 @@ kable(Q7, col.names = c('Habitat (main)',
 
 *List in order of importance which pathways are possible and how important they are for the probability of entry? Note: pathways for entry are pathways from outside the PRA area into the PRA area.  Pathways within the PRA area should be detailed under spread (section 11).*
 
+```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
+cat("Examples of pathways are:\nPlants for planting\t\t\t\tNatural spread\n\nOther possible pathways\n*packaging material\t\t\t*conveyance and machinery\n*hitchhiking\t\t\t\t*manufactured plant products\n*soil/growing media\t\t\t*ship ballast water\n*plant waste\t\t\t\t*leisure equipment\n*bird seed\t\t\t\t\t*intentional introduction\n*escape from confinement"
+)
+```
 
+```{r echo = F, eval = T}
+Q9 <- read.csv('./Resources/Tables/pathways.csv',
+               header = T,
+               stringsAsFactors = F)
+
+kable(Q9, col.names = c('Possible pathway',
+               'Pathway:')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(1, width = '22em')
+```
 
 (@) Likelihood of establishment in the natural environment in the PRA area:
 
