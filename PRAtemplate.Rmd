@@ -6,7 +6,7 @@ output:
   html_document:
     theme: cerulean
     highlight: null
-    css: "./styling/styles.css"
+    css: "./Resources/Styling/styles.css"
 ---
 
 ```{r setup, include=FALSE}
@@ -28,8 +28,8 @@ PRA area: *specify the PRA area being assessed*
 # Stage 2. Pest risk assessment
 
 (@) Taxonomy:
-*e.g. Genus, species/ subspecies, Authority, Family, Order, Kingdom. 
-Include information on strains and populations, etc. if relevant, and synonyms if appropriate.*
+
+*e.g. Genus, species/ subspecies, Authority, Family, Order, Kingdom. Include information on strains and populations, etc. if relevant, and synonyms if appropriate.*
 
 **Common name:**
 
@@ -44,25 +44,11 @@ Include information on strains and populations, etc. if relevant, and synonyms i
 
 (@) Is the pest a vector?
 
-```{r echo = F, eval = T}
-Q3 <- data.frame(yes = 'Yes',
-                 no = 'No')
-kable(Q3) %>%
-  kable_styling(full_width = F, position = 'left') %>%
-  row_spec(row = 0, color = 'white') %>%
-  column_spec(c(1, 2), width = '5em')
-```
+Yes / No
 
 (@) Is the vector needed for pest entry or spread?
 
-```{r echo = F, eval = T}
-Q4 <- data.frame(yes = 'Yes',
-                 no = 'No')
-kable(Q4) %>%
-  kable_styling(full_width = F, position = 'left') %>%
-  row_spec(row = 0, color = 'white') %>%
-  column_spec(c(1, 2), width = '5em')
-```
+Yes / No
 
 (@) Regulatory status of the pest:
 
@@ -71,6 +57,19 @@ kable(Q4) %>%
 (@) Distribution:
 
 ```{r echo = F, eval = T}
+Q6 <- read.csv('./Resources/Tables/distribution.csv',
+               header = T,
+               stringsAsFactors = F)
+kable(Q6, col.names = c('Continent',
+                        'Distribution',
+                        'Provide comments on the pest status in the different
+                        countries where it occurs',
+                        'Reference')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(1, width = '9em') %>%
+  column_spec(c(2,3), width = '15em') %>%
+  column_spec(4, width = '10em')
 ```
 
 *Information on distribution may be retrieved from [PQR](http://www.eppo.int/DATABASES/pqr/pqr.htm), [CAPRA datasets](http://capra.eppo.org/), CABI maps, etc. Comments on distribution: (e.g. if known, please comment on the area of origin, how the pest has spread and on any evidence of increasing range / frequency of introductions)*
@@ -80,7 +79,9 @@ kable(Q4) %>%
 *Detail the main habitat and the EUNIS habitat types under threat and comment on their occurrence and distribution within the PRA area. Detail if the habitats are threatened or protected giving the classification type where appropriate (see the Habitats Directive for further information).  Detail if the habitats threatened by the pest are present in the PRA area and the occurrence and distribution of the habitats in the PRA area.  Provide supporting references.*
 
 ```{r echo = F, eval = T}
-Q7 <- read.csv('habitats.csv', header = T)
+Q7 <- read.csv('./Resources/Tables/habitats.csv',
+               header = T,
+               stringsAsFactors = F)
 
 kable(Q7, col.names = c('Habitat (main)',
                'EUNIS habitat types',
