@@ -1,0 +1,218 @@
+---
+title: "Pest Risk Assessment"
+author: "Michal Czyz"
+date: "August 9, 2018"
+output:
+  html_document:
+    theme: cerulean
+    highlight: null
+    css: "./styling/styles.css"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library('kableExtra')
+library('magrittr')
+```
+
+Express Pest Risk Analysis: *(Pest name)*
+
+Date:
+
+# Stage 1. Initiation
+
+Reason for performing the PRA: *(e.g. interceptions, outbreak)*
+PRA area: *specify the PRA area being assessed*
+
+
+# Stage 2. Pest risk assessment
+
+(@) Taxonomy:
+*e.g. Genus, species/ subspecies, Authority, Family, Order, Kingdom. 
+Include information on strains and populations, etc. if relevant, and synonyms if appropriate.*
+
+**Common name:**
+
+(@) Pest overview:
+
+- **Summarize the life cycle** *(e.g. length of life cycle, location of different life stages, temperature thresholds, humidity - requirements) and other relevant information (damage should be described in Q 12). If a datasheet is available, this section should only include the basic information. If available place illustrations of the pest and the symptoms caused in Appendix 1.*
+- **Host plants** *(for pests)/habitats (for invasive plants) (more detail should be provided in Q 7)*
+- **Symptoms** 
+- **Detection and identification** *(note if a diagnostic protocol is available). State if and how the pest can be trapped.*
+- *Detail if a relevant PRA exists. Note that studies such as a management or contingency plans and/or cost-benefit analysis may also provide useful information for performing a PRA, but can usually not be considered as relevant PRAs.*
+- *Describe any socio-economic benefits of the species.*
+
+(@) Is the pest a vector?
+
+```{r echo = F, eval = T}
+Q3 <- data.frame(yes = 'Yes',
+                 no = 'No')
+kable(Q3) %>%
+  kable_styling(full_width = F, position = 'left') %>%
+  row_spec(row = 0, color = 'white') %>%
+  column_spec(c(1, 2), width = '5em')
+```
+
+(@) Is the vector needed for pest entry or spread?
+
+```{r echo = F, eval = T}
+Q4 <- data.frame(yes = 'Yes',
+                 no = 'No')
+kable(Q4) %>%
+  kable_styling(full_width = F, position = 'left') %>%
+  row_spec(row = 0, color = 'white') %>%
+  column_spec(c(1, 2), width = '5em')
+```
+
+(@) Regulatory status of the pest:
+
+*Is the pest already regulated by any NPPO, or recommended for regulation by any RPPO? (Assessors can check this by reference to EPPO PQR, RPPO and IPPC websites in addition to normal search mechanisms).*
+
+(@) Distribution:
+
+```{r echo = F, eval = T}
+```
+
+*Information on distribution may be retrieved from [PQR](http://www.eppo.int/DATABASES/pqr/pqr.htm), [CAPRA datasets](http://capra.eppo.org/), CABI maps, etc. Comments on distribution: (e.g. if known, please comment on the area of origin, how the pest has spread and on any evidence of increasing range / frequency of introductions)*
+
+(@) Habitats and where they occur in the PRA area:
+
+*Detail the main habitat and the EUNIS habitat types under threat and comment on their occurrence and distribution within the PRA area. Detail if the habitats are threatened or protected giving the classification type where appropriate (see the Habitats Directive for further information).  Detail if the habitats threatened by the pest are present in the PRA area and the occurrence and distribution of the habitats in the PRA area.  Provide supporting references.*
+
+```{r echo = F, eval = T}
+Q7 <- read.csv('habitats.csv', header = T)
+
+kable(Q7, col.names = c('Habitat (main)',
+               'EUNIS habitat types',
+               'Status of habitat (e.g. threatened or protected)',
+               'Is the pest present in the habitat in the PRA area (Yes/No)',
+               'Comments',
+               'References')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(1:6, width = '10em')
+```
+
+(@) Pathways for entry: 
+
+*List in order of importance which pathways are possible and how important they are for the probability of entry? Note: pathways for entry are pathways from outside the PRA area into the PRA area.  Pathways within the PRA area should be detailed under spread (section 11).*
+
+
+
+(@) Likelihood of establishment in the natural environment in the PRA area:
+
+*Consider in particular the presence of host plants/habitats and climatic suitability and describe the area where establishment is most likely (area of potential establishment). Reference to maps such as Köppen-Geiger climate zones, day degrees and hardiness zones or the use of species distribution models may help assess the likelihood of establishment (see e.g. [Rating Guidance for climatic suitability](http://capra.eppo.org/files/links/Rating_Guidance_for_climatic_suitability.pdf)).*
+
+*Consider for example the reproductive mode of the organism and the ability of the organism to adapt to the PRA area (and habitats within). Consider competition from existing species in the PRA area, and/or natural enemies already present?*
+
+(@) Likelihood of establishment in managed environment in the PRA area:
+
+*Factors to consider for pest plants are for instance the regular mowing of road sides, cleaning of water courses, etc. Existing pest management practice should also be considered.*
+
+(@) Spread in the PRA area:
+
+*Natural spread*
+
+*Human assisted spread*
+
+*Briefly describe each mode of spread and indicate the rate or distance of spread.*
+
+*If possible consider how long it would take for the pest to spread widely within the area of potential establishment if no phytosanitary measures are taken. If no specific data are available, compare with similar organisms.*
+
+(@) Impact in the current area of distribution:
+
+  I) Impacts on biodiversity
+
+*Describe the environmental impacts with respect to biodiversity in the current area of distribution (only negative impacts are considered).*
+
+*Briefly describe the existing control measures applied against the pest*
+
+  II) Impact on ecosystem services
+  
+*Consider the negative impact the pest may have on categories of ecosystem services (examples of ecosystem service under each main category are detailed in the highlighted box). The categories of ecosystem services are based on the [Millennium Ecosystem Assessment (2005)](http://www.unep.org/maweb/documents/document.356.aspx.pdf).*
+
+  III) Socio-economic impact**
+
+*(e.g. evaluate socio-economic impacts relating to control/management costs, costs relating to habitat degradation and agriculture, forestry and fisheries (i.e. reduction in leisure activities, real estate prices, and yields etc.)*
+
+(@) Potential impact in the PRA area:
+
+*Take into considerations answers to questions 8, 9 & 10.  Evaluate if potential negative impacts in the PRA area will be similar to that in areas already colonised in the current area of distribution.  Consider natural enemies, cultural practices, etc.in the area of potential establishment.*
+
+Will impacts be largely the same as in the current area of distribution? *Yes/No*
+
+*If the answer to the above is yes describe the reasoning for this under the following subheadings.  If no, describe why the impacts will be different and provide a new rating score.*
+
+  I) Potential impacts on biodiversity in the PRA area
+
+**If No,**
+
+ II) Potential impact on ecosystem services in the PRA area
+
+**If No,**
+
+ III) Potential socio-economic impact in the PRA area
+
+**If No,**
+
+(@) Identification of the endangered area:
+
+*Define the endangered area (see definition in ISPM 5): describe in which part of the area of potential establishment significant impact is expected.*
+
+(@) Climate change:
+
+*Consider the influence of projected climate change scenarios on the pest.*
+
+  I) Define which climate projection you are using from 2050 to 2100**
+
+Climate projection:
+
+*following the [IPCC projections](http://www.ipcc.ch/)*
+
+*Reference: IPCC, 2014: Summary for policymakers. In: Climate Change 2014: Impacts, Adaptation, and Vulnerability. Part A: Global and Sectoral Aspects. Contribution of Working Group II to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change [Field, C.B., V.R. Barros, D.J. Dokken, et al.,(eds.)]. Cambridge University Press, Cambridge, United Kingdom and New York, NY, USA, pp. 1-32. [WG2AR5 SPM FINAL](https://ipcc-wg2.gov/AR5/images/uploads/WG2AR5_SPM_FINAL.pdf)*
+
+  II) Which component of climate change do you think is the most relevant for this organism?
+
+Delete (*yes/no*) as appropriate
+
+Temperature (*yes/no*) Precipitation (*yes/no*) CO~2~ levels (*yes/no*)
+Sea level rise (*yes/no*) Salinity (*yes/no*) Nitrogen deposition (*yes/no*)
+Acidification (*yes/no*) Land use change (*yes/no*) Other (*please specify*)
+
+  III) Consider the influence of projected climate change scenarios on the pest.
+
+*Specifically consider the influence of climate change on entry, establishment, spread and impact of the pest in the PRA area. In particular, consider the following aspects*
+
+(@) Overall assessment of risk:
+
+*Summarize the likelihood of entry, establishment, spread and possible impact without phytosanitary measure. An overall rating should be given in the summary part which is placed at the beginning of the Express PRA. Then consider whether phytosanitary measures are necessary. If the assessment shows that phytosanitary measures are not required for a country but there are indications that other EPPO countries are at higher risk, mention it.*
+
+# Stage 3. Pest risk menagment.
+
+(@) Phytosanitary measures 
+
+  I) Describe potential measures for relevant pathways and their expected effectiveness on preventing introduction (entry & establishment) and / or spread.
+
+*If possible, specify prospects of eradication or containment in case of an outbreak. Indicate effectiveness and feasibility of the measures*
+
+  II) Management measures for eradication, containment and control
+
+*Detail all available management measures used to eradicate, contain and control the pest. Indicate the effectiveness (including cost- effectiveness) and feasibility of the measures.*
+
+(@) Uncertainty:
+
+*List and describe the main sources of uncertainty within the risk assessment and risk management. State whether a detailed PRA is needed to reduce key aspects of uncertainty (if so state which parts of the PRA should be focused on). Comment on what work would be needed to address uncertainties (e.g. for distribution the need for surveys, produce epidemiological data…)*
+
+(@) Remarks:
+
+*Add any other relevant information or recommendations.\nFor example when phytosanitary measures are not considered appropriate, recommendations for the development of other control strategies can be made (e.g. Integrated Pest Management, certification schemes).*
+
+```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
+cat('Once the analysis has been completed,\na summary should be prepared (see the summary box at the beginning of the Express PRA)')
+```
+
+(@) REFERENCES:
+
+```{r echo = F, comment = NULL, class.output = 'bg-warning', class.output = 'bg-warning'}
+cat('Provide references cited above (see Instructions for authors to the EPPO Bulletin).\nWhen referring to websites, include the web address and date accessed.')
+```
