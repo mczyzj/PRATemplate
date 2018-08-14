@@ -105,15 +105,19 @@ cat("Examples of pathways are:\nPlants for planting\t\t\t\tNatural spread\n\nOth
 ```
 
 ```{r echo = F, eval = T}
-Q9 <- read.csv('./Resources/Tables/pathways.csv',
+Q8A <- read.csv('./Resources/Tables/pathways.csv',
                header = T,
                stringsAsFactors = F)
 
-kable(Q9, col.names = c('Possible pathway',
+kable(Q8A, col.names = c('Possible pathway',
                'Pathway:')) %>%
   kable_styling(full_width = T, bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
   column_spec(1, width = '22em')
+```
+
+```{r echo = F, comment = NULL, class.output = 'bg-warning', class.output = 'bg-warning'}
+cat("Repeat table for each pathway considered.")
 ```
 
 (@) Likelihood of establishment in the natural environment in the PRA area:
@@ -122,9 +126,34 @@ kable(Q9, col.names = c('Possible pathway',
 
 *Consider for example the reproductive mode of the organism and the ability of the organism to adapt to the PRA area (and habitats within). Consider competition from existing species in the PRA area, and/or natural enemies already present?*
 
+```{r echo = F, eval = T}
+Q9 <- data.frame(Rating = c('Rating of the likelihood of establishment in
+                            the natural environment', 'Rating of uncertainty'),
+                 Low = c('X',''),      #put X in correct level between ''
+                 Moderate = c('','X'), #first place is for likelihood, second
+                 High = c('',''))      #for uncetainity
+ kable(Q9, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
 (@) Likelihood of establishment in managed environment in the PRA area:
 
 *Factors to consider for pest plants are for instance the regular mowing of road sides, cleaning of water courses, etc. Existing pest management practice should also be considered.*
+
+```{r echo = F, eval = T}
+Q10 <- data.frame(Rating = c('Rating of the likelihood of establishment in
+                            the managed environment', 'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for likelihood, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q10, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
 
 (@) Spread in the PRA area:
 
@@ -136,6 +165,19 @@ kable(Q9, col.names = c('Possible pathway',
 
 *If possible consider how long it would take for the pest to spread widely within the area of potential establishment if no phytosanitary measures are taken. If no specific data are available, compare with similar organisms.*
 
+```{r echo = F, eval = T}
+Q11 <- data.frame(Rating = c('Rating of the magnitude of spread in
+                            the PRA area', 'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q11, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
+
 (@) Impact in the current area of distribution:
 
   I) Impacts on biodiversity
@@ -144,9 +186,41 @@ kable(Q9, col.names = c('Possible pathway',
 
 *Briefly describe the existing control measures applied against the pest*
 
+```{r echo = F, eval = T}
+Q12.1 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity in
+                            the current area of distirbution', 'Rating of uncertainty'),
+                 Low = c('',''),      #put X in correct level between '' 
+                 Moderate = c('',''), #first place is for magnitude, second
+                 High = c('',''))     #for uncetainity (see example Q9)
+ kable(Q12.1, align = c('l', 'c', 'c', 'c')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
+  column_spec(2:4, width = '8em', bold = T) %>%
+  row_spec(1:2, color = 'black', background = '#f0ae82')
+```
+
   II) Impact on ecosystem services
   
 *Consider the negative impact the pest may have on categories of ecosystem services (examples of ecosystem service under each main category are detailed in the highlighted box). The categories of ecosystem services are based on the [Millennium Ecosystem Assessment (2005)](http://www.unep.org/maweb/documents/document.356.aspx.pdf).*
+
+```{r echo = F, comment = NULL, class.output = 'bg-info', class.output = 'bg-info'}
+cat("Examples of ecosystem services to consider under each category include:\n\n*Provisioning services\t\t\t\t\t\t\t\t*Supporting services\n
+\tFresh water\t\t\t\t\t\t\t\t\t\t\tNutrient cycling\n
+\tGenetic resources\t\t\t\t\t\t\t\t\tPrimary production\n
+\tFood production (crop and livestock etc.)\t\t\tHabitat stability\n
+\tCommodity production (fibre, timber etc.)\n
+*Regulating services\t\t\t\t\t\t\t\t*Cultural services\n
+\tSoil formation\t\t\t\t\t\t\t\t\t\tAesthetic experiences\n
+\tPollination\t\t\t\t\t\t\t\t\t\t\tCultural heritage\n
+\tNatural hazard regulation (fire, erosion, flooding)\tTourism\n
+\tWater regulation\t\t\t\t\t\t\t\t\tRecreation (fishing, nature enjoyment etc.)\n
+\tBiodiversity\t\t\t\t\t\t\t\t\t\tSpiritual wellbeing\n
+\tDecomposition\n
+\tPhotosynthesis and primary production\n
+\tAir quality regulation\n
+\tPest and disease regulation"
+)
+```
 
   III) Socio-economic impact**
 
