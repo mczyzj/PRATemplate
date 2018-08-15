@@ -1,9 +1,24 @@
 ---
-title: "Pest Risk Assessment for"
+title: "Express Pest Risk Analysis:"
 subtitle: "Pest name"
-author: 
-  - "Michal Czyz"
-institute: "Institute of Magick Research"
+taxoauthor: "Linnaeus, 1735"
+author:
+  - name: Author One
+    email: author_one@example.com
+    affiliation: Some Institute of Technology
+    affiliationNum: A
+    footnote: Corresponding Author
+  - name: Author Two
+    affiliationNum: B
+  - name: Author Three
+    affiliationNum: B
+address:
+  - affiliationNum: A
+    code: Some Institute of Technology
+    address: Department, Street, City, State, Zip
+  - affiliationNum: B
+    code: Another University
+    address: Department, Street, City, State, Zip
 keywords:
   - "Pest Risk Assessment"
   - "EPPO"
@@ -13,6 +28,7 @@ output:
     theme: cerulean
     highlight: null
     css: "./Resources/Styling/styles.css"
+    template: eppo_template.html
 ---
 
 ```{r setup, include=FALSE}
@@ -20,10 +36,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library('kableExtra')
 library('magrittr')
 ```
-
-Express Pest Risk Analysis: *(Pest name)*
-
-Date:
 
 # Stage 1. Initiation
 
@@ -360,9 +372,18 @@ Climate projection:
 
 Delete (*yes/no*) as appropriate
 
-Temperature (*yes/no*) Precipitation (*yes/no*) CO~2~ levels (*yes/no*)
-Sea level rise (*yes/no*) Salinity (*yes/no*) Nitrogen deposition (*yes/no*)
-Acidification (*yes/no*) Land use change (*yes/no*) Other (*please specify*)
+```{r envirTable, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+environTable <- " 
+
+|  | | | | | | |
+|--|:--:|--|:--:|--|:--:|
+| Temperature                      | *Yes/No* | &nbsp;&nbsp;Precipitation                     | *Yes/No* | &nbsp;&nbsp;CO~2~ levels                          | *Yes/No* |
+| Sea level rise&nbsp;&nbsp;&nbsp; | *Yes/No* | &nbsp;&nbsp;Salinity                          | *Yes/No* | &nbsp;&nbsp;Nitrogen deposition&nbsp;&nbsp;&nbsp; | *Yes/No* |
+| Acidification                    | *Yes/No* | &nbsp;&nbsp;Land use change&nbsp;&nbsp;&nbsp; | *Yes/No* | &nbsp;&nbsp;Other                                 | *Yes/No* |
+
+"
+cat(environTable) 
+```
 
   III) Consider the influence of projected climate change scenarios on the pest.
 
