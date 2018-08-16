@@ -37,11 +37,14 @@ library('kableExtra')
 library('magrittr')
 ```
 
+```{r cache=TRUE, eval = T, echo=FALSE}
+output_format <- 'html'
+```
+
 # Stage 1. Initiation
 
 Reason for performing the PRA: *(e.g. interceptions, outbreak)*
 PRA area: *specify the PRA area being assessed*
-
 
 # Stage 2. Pest risk assessment
 
