@@ -24,14 +24,30 @@ keywords:
   - "EPPO"
 date: "August 9, 2018"
 output:
-  html_document:
-    theme: cerulean
+  pdf_document:
+#    theme: cerulean
     highlight: null
-    css: ./Resources/Styling/styles.css
-    template: eppo_template
+#    css: ./Resources/Styling/styles.css
+    template: NULL
+    keep_tex: true
+    pandoc_args:
+      - --standalone    
 header-includes:
    - \usepackage{tcolorbox}
    - \usepackage{tabto}
+   - \usepackage{booktabs}
+   - \usepackage{longtable}
+   - \usepackage{array}
+   - \usepackage{multirow}
+   - \usepackage{wrapfig}
+   - \usepackage{float}
+   - \usepackage{colortbl}
+   - \usepackage{pdflscape}
+   - \usepackage{tabu}
+   - \usepackage{threeparttable}
+   - \usepackage{threeparttablex}
+   - \usepackage[normalem]{ulem}
+   - \usepackage{makecell}
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +57,7 @@ library('magrittr')
 ```
 
 ```{r cache=TRUE, eval = T, echo=FALSE}
-output_format <- 'html'
+output_format <- 'pdf'
 ```
 
 # Stage 1. Initiation
