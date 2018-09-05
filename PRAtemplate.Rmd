@@ -1,39 +1,59 @@
 ---
-title: 'Express Pest Risk Analysis:'
+title: "Express Pest Risk Analysis:"
+pest: "pest name"
+taxoauthor: "Linnaeus, 1735"
 author:
-- affiliationNum: A
-  email: author_one@pra.org
-  footnote: Corresponding Author
-  name: Author One
-- affiliationNum: B
-  name: Author Two
-- affiliationNum: B
-  name: Author Three
-- affiliationNum: C
-  name: Author Four
-date: "August 9, 2018"
-citecolor: TealBlue
-compact-title: yes
-always_allow_html: yes
+  - name: Author One
+    email: author_one@pra.org
+    affiliationNum: A
+    footnote: Corresponding Author
+  - name: Author Two
+    affiliationNum: B
+  - name: Author Three
+    affiliationNum: B
+  - name: Author Four
+    affiliationNum: C
+address:
+  - affiliationNum: A
+    code: Some Institute of Technology
+    address: Department, Street, City, State, Zip
+  - affiliationNum: B
+    code: Another University
+    address: Department, Street, City, State, Zip
+  - affiliationNum: C
+    code: Ministry of Knowledge
+    address: Department, Street, City, State, Zip
+keywords:
+  - "Pest Risk Assessment"
+  - "EPPO"
+date: "August 9, 2018^[This report was generated using R [@rcore2018] with knitr and bookdown [@xie2015; @xie2016]]"
+output:
+  html_document:
+    theme: cerulean  ## Comment this line when making pdf
+    css: ./Resources/Styling/styles.css ## Comment this line when making pdf
+    template: eppo_template
+    highlight: null
+    pandoc_args:
+      - --standalone
+  pdf_document:
+    includes:
+      in_header: preamble.tex
+    highlight: null
+    template: eppo_template
+    keep_tex: true
+    dev: "cairo_pdf"
+    latex_engine: xelatex
+    citation_package: biblatex
+bibliography: [book.bib]
+#biblio-style: apalike
+link-citations: yes
 geometry: margin=1in
 graphics: yes
-keywords:
-- Pest Risk Assessment
-- EPPO
-linkcolor: TealBlue
-pest: pest name
-taxoauthor: Linnaeus, 1735
-address:
-- address: Department, Street, City, State, Zip
-  affiliationNum: A
-  code: Some Institute of Technology
-- address: Department, Street, City, State, Zip
-  affiliationNum: B
-  code: Another University
-- address: Department, Street, City, State, Zip
-  affiliationNum: C
-  code: Ministry of Knowledge
+compact-title: true
+always_allow_html: yes
 urlcolor: Cerulean
+linkcolor: TealBlue
+citecolor: TealBlue
 ---
 
 ```{r setup, include=FALSE}
@@ -41,10 +61,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library('kableExtra')
 library('magrittr')
 if(knitr::is_latex_output()) options(knitr.table.format = "latex")
-```
-
-```{r cache=TRUE, eval = T, echo=FALSE}
-output_format <- 'pdf'
 ```
 
 # Stage 1. Initiation
@@ -57,7 +73,7 @@ PRA area: *specify the PRA area being assessed*
 
 (@) Taxonomy:
 
-*e.g. Genus, species/ subspecies, Authority, Family, Order, Kingdom. Include information on strains and populations, etc. if relevant, and synonyms if appropriate.*
+*e.g. Genus, species/ subspecies, Authority, Family, Order, Kingdom. Include information on strains and populations, etc. if relevant, and synonyms if appropriate.* [@eppo2018]
 
 **Common name:**
 
@@ -704,7 +720,19 @@ if (knitr::is_html_output()) {
 }
 ```
 
-(@) REFERENCES:
+(@) Apendix
+
+```{r echo = F, comment = NULL, results='asis'}
+if (knitr::is_html_output()) {
+cat('<pre class="bg-warning"><code>Provide any additional information as well as any relevant and informative pictures here.</code></pre>')
+} else {
+  cat('\\begin{tcolorbox}[minipage,colback=yellow!50!white,colframe=yellow!50!black,arc=8pt,outer arc=5pt]
+\\centering
+\\scriptsize Provide any additional information,\\newline
+as well as any relevant and informative pictures here.
+\\end{tcolorbox}')
+}
+```
 
 ```{r echo = F, comment = NULL, results='asis'}
 if (knitr::is_html_output()) {
@@ -717,3 +745,5 @@ When referring to websites, include the web address and date accessed.</code></p
 \\end{tcolorbox}')
 }
 ```
+
+# References
