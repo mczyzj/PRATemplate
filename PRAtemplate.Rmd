@@ -1,71 +1,39 @@
 ---
-title: "Express Pest Risk Analysis:"
-pest: "pest name"
-taxoauthor: "Linnaeus, 1735"
+title: 'Express Pest Risk Analysis:'
 author:
-  - name: Author One
-    email: author_one@pra.org
-    affiliationNum: A
-    footnote: Corresponding Author
-  - name: Author Two
-    affiliationNum: B
-  - name: Author Three
-    affiliationNum: B
-  - name: Author Four
-    affiliationNum: C
-address:
-  - affiliationNum: A
-    code: Some Institute of Technology
-    address: Department, Street, City, State, Zip
-  - affiliationNum: B
-    code: Another University
-    address: Department, Street, City, State, Zip
-  - affiliationNum: C
-    code: Ministry of Knowledge
-    address: Department, Street, City, State, Zip
-keywords:
-  - "Pest Risk Assessment"
-  - "EPPO"
+- affiliationNum: A
+  email: author_one@pra.org
+  footnote: Corresponding Author
+  name: Author One
+- affiliationNum: B
+  name: Author Two
+- affiliationNum: B
+  name: Author Three
+- affiliationNum: C
+  name: Author Four
 date: "August 9, 2018"
-output:
-  pdf_document:
-    highlight: null
-    template: eppo_template
-    keep_tex: true
-    dev: "cairo_pdf"
-    latex_engine: xelatex
-    pandoc_args:
-      - --standalone    
-  html_document:
-    theme: cerulean  ## Comment this line when making pdf
-    css: ./Resources/Styling/styles.css ## Comment this line when making pdf
-    template: eppo_template
-    highlight: null
-header-includes:
-   - \usepackage{hyperref}
-   - \usepackage[dvipsnames,table]{xcolor}
-   - \usepackage{tcolorbox}
-   - \usepackage{tabto}
-   - \usepackage{booktabs}
-   - \usepackage{longtable}
-   - \usepackage{array}
-   - \usepackage{multirow}
-   - \usepackage{wrapfig}
-   - \usepackage{float}
-   - \usepackage{colortbl}
-   - \usepackage{pdflscape}
-   - \usepackage{tabu}
-   - \usepackage{threeparttable}
-   - \usepackage{threeparttablex}
-   - \usepackage[normalem]{ulem}
-   - \usepackage{makecell}
+citecolor: TealBlue
+compact-title: yes
+always_allow_html: yes
 geometry: margin=1in
 graphics: yes
-compact-title: true
-always_allow_html: yes
-urlcolor: Cerulean
+keywords:
+- Pest Risk Assessment
+- EPPO
 linkcolor: TealBlue
-citecolor: TealBlue
+pest: pest name
+taxoauthor: Linnaeus, 1735
+address:
+- address: Department, Street, City, State, Zip
+  affiliationNum: A
+  code: Some Institute of Technology
+- address: Department, Street, City, State, Zip
+  affiliationNum: B
+  code: Another University
+- address: Department, Street, City, State, Zip
+  affiliationNum: C
+  code: Ministry of Knowledge
+urlcolor: Cerulean
 ---
 
 ```{r setup, include=FALSE}
