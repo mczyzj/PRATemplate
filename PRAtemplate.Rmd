@@ -1,17 +1,18 @@
 ---
 title: "Express Pest Risk Analysis:"
-subtitle: "Pest name"
+pest: "pest name"
 taxoauthor: "Linnaeus, 1735"
 author:
   - name: Author One
-    email: author_one@example.com
-    affiliation: Some Institute of Technology
+    email: author_one@pra.org
     affiliationNum: A
     footnote: Corresponding Author
   - name: Author Two
     affiliationNum: B
   - name: Author Three
     affiliationNum: B
+  - name: Author Four
+    affiliationNum: C
 address:
   - affiliationNum: A
     code: Some Institute of Technology
@@ -19,20 +20,30 @@ address:
   - affiliationNum: B
     code: Another University
     address: Department, Street, City, State, Zip
+  - affiliationNum: C
+    code: Ministry of Knowledge
+    address: Department, Street, City, State, Zip
 keywords:
   - "Pest Risk Assessment"
   - "EPPO"
 date: "August 9, 2018"
 output:
   pdf_document:
-#    theme: cerulean
     highlight: null
-#    css: ./Resources/Styling/styles.css
-    template: NULL
+    template: eppo_template
     keep_tex: true
+    dev: "cairo_pdf"
+    latex_engine: xelatex
     pandoc_args:
       - --standalone    
+  html_document:
+    theme: cerulean  ## Comment this line when making pdf
+    css: ./Resources/Styling/styles.css ## Comment this line when making pdf
+    template: eppo_template
+    highlight: null
 header-includes:
+   - \usepackage{hyperref}
+   - \usepackage[dvipsnames,table]{xcolor}
    - \usepackage{tcolorbox}
    - \usepackage{tabto}
    - \usepackage{booktabs}
@@ -48,12 +59,20 @@ header-includes:
    - \usepackage{threeparttablex}
    - \usepackage[normalem]{ulem}
    - \usepackage{makecell}
+geometry: margin=1in
+graphics: yes
+compact-title: true
+always_allow_html: yes
+urlcolor: Cerulean
+linkcolor: TealBlue
+citecolor: TealBlue
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library('kableExtra')
 library('magrittr')
+if(knitr::is_latex_output()) options(knitr.table.format = "latex")
 ```
 
 ```{r cache=TRUE, eval = T, echo=FALSE}
@@ -77,6 +96,7 @@ PRA area: *specify the PRA area being assessed*
 (@) Pest overview:
 
 - **Summarize the life cycle** *(e.g. length of life cycle, location of different life stages, temperature thresholds, humidity - requirements) and other relevant information (damage should be described in Q 12). If a datasheet is available, this section should only include the basic information. If available place illustrations of the pest and the symptoms caused in Appendix 1.*
+
 - **Host plants** *(for pests)/habitats (for invasive plants) (more detail should be provided in Q 7)*
 - **Symptoms** 
 - **Detection and identification** *(note if a diagnostic protocol is available). State if and how the pest can be trapped.*
@@ -102,7 +122,7 @@ Q6 <- read.csv('./Resources/Tables/distribution.csv',
                header = T,
                stringsAsFactors = F)
 
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q6, col.names = c('Continent',
                         'Distribution',
                         'Provide comments on the pest status in the different
@@ -112,10 +132,11 @@ kable(Q6, col.names = c('Continent',
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
   column_spec(1, width = '9em') %>%
   column_spec(c(2,3), width = '15em') %>%
-  column_spec(4, width = '10em')
+  column_spec(4, width = '10em') %>%
+  collapse_rows(columns = 1:2, valign = "middle")
 }  else {
   kable(Q6, 'latex', booktabs = T, longtable = T,
-        col.names = c('Continent', 'Distribution',
+        col.names = c('Continent', 'Distributo',
                       'Provide comments on the pest status in the different countries where it occurs',
                       'Reference')) %>%
     kable_styling(full_width = T,
@@ -123,7 +144,8 @@ kable(Q6, col.names = c('Continent',
     column_spec(1, width = '2.5cm') %>%
     column_spec(c(2,3), width = '4.5cm') %>%
     column_spec(4, width = '3cm') %>%
-    row_spec(row = 0, bold = T, background = '#F5F6FA')
+    row_spec(row = 0, bold = T, background = '#F5F6FA') %>%
+    collapse_rows(columns = 1:2, latex_hline = "major", valign = "middle")
 }
 ```
 
@@ -137,7 +159,7 @@ kable(Q6, col.names = c('Continent',
 Q7 <- read.csv('./Resources/Tables/habitats.csv',
                header = T,
                stringsAsFactors = F)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q7, col.names = c('Habitat (main)',
                'EUNIS habitat types',
                'Status of habitat (e.g. threatened or protected)',
@@ -160,7 +182,6 @@ kable(Q7, col.names = c('Habitat (main)',
     row_spec(row = 0, bold = T, background = '#F5F6FA') %>%
     column_spec(c(1:3,6), width = '2.4cm') %>%
     column_spec(4, width = '2cm')
-
 }
 ```
 
@@ -169,7 +190,7 @@ kable(Q7, col.names = c('Habitat (main)',
 *List in order of importance which pathways are possible and how important they are for the probability of entry? Note: pathways for entry are pathways from outside the PRA area into the PRA area.  Pathways within the PRA area should be detailed under spread (section 11).*
 
 ```{r echo = F, comment = NULL, results='asis'}
-if (output_format == 'html') { 
+if (knitr::is_html_output()) { 
 cat('<pre class="bg-info"><code>Examples of pathways are:\nPlants for planting\t\t\t\tNatural spread\n\nOther possible pathways\n*packaging material\t\t\t*conveyance and machinery\n*hitchhiking\t\t\t\t*manufactured plant products\n*soil/growing media\t\t\t*ship ballast water\n*plant waste\t\t\t\t*leisure equipment\n*bird seed\t\t\t\t\t*intentional introduction\n*escape from confinement</code></pre>'
 )
 } else {
@@ -192,7 +213,7 @@ Q8A <- read.csv('./Resources/Tables/pathways.csv',
                header = T,
                stringsAsFactors = F)
 
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
   kable(Q8A, col.names = c('Possible pathway', 'Pathway:')) %>%
     kable_styling(full_width = T,
                   bootstrap_options = c('striped', 'condensed', 'bordered')) %>%
@@ -204,12 +225,14 @@ if (output_format == 'html'){
     kable_styling(full_width = T,
                   latex_options = c('striped', 'hold_position', 'repeat_header')) %>%
     row_spec(row = 0, bold = T, background = '#F5F6FA') %>%
-    column_spec(1, width = '6cm')
+    row_spec(row = 1:11, bold = F) %>%
+    column_spec(1, width = '7cm') %>%
+    collapse_rows(columns = 1, latex_hline = "major", valign = "top")
 }
 ```
 
 ```{r echo = F, comment = NULL, results = 'asis'}
-if (output_format == 'html') {
+if (knitr::is_html_output()) {
   cat('<pre class="bg-warning"><code>Repeat table for each pathway considered.</code></pre>')
 } else {
   cat('\\begin{tcolorbox}[minipage,colback=yellow!50!white,colframe=yellow!50!black,arc=8pt,outer arc=5pt]
@@ -231,7 +254,7 @@ Q9 <- data.frame(Rating = c('Rating of the likelihood of establishment in the na
                  Low = c('X','.'),      #put X in correct level between ''
                  Moderate = c('.','X'), #first place is for likelihood, second
                  High = c('.','.'), stringsAsFactors = F)      #for uncetainity
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  kable(Q9, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -248,6 +271,7 @@ if (output_format == 'html'){
     row_spec(1:2, color = 'black', background = '#F0AE82')
 }
 ```
+
 (@) Likelihood of establishment in managed environment in the PRA area:
 
 *Factors to consider for pest plants are for instance the regular mowing of road sides, cleaning of water courses, etc. Existing pest management practice should also be considered.*
@@ -255,12 +279,12 @@ if (output_format == 'html'){
 ```{r echo = F, eval = T}
 Q10 <- data.frame(Rating = c('Rating of the likelihood of establishment in the managed environment',
                             'Rating of uncertainty'),
-                 Low = c('.','.'),      #put X in correct level between '' 
-                 Moderate = c('.','.'), #first place is for likelihood, second
+                 Low = c('X','.'),      #put X in correct level between '' 
+                 Moderate = c('.','X'), #first place is for likelihood, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){ 
+if (knitr::is_html_output()) { 
 kable(Q10, align = c('l', 'c', 'c', 'c')) %>%
-  kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
+  kable_styling(full_width = T, bootstrap_options = c('bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
   column_spec(2:4, width = '8em', bold = T) %>%
   row_spec(1:2, color = 'black', background = '#f0ae82')
@@ -292,7 +316,7 @@ Q11 <- data.frame(Rating = c('Rating of the magnitude of spread in the PRA area'
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){ 
+if (knitr::is_html_output()) {
 kable(Q11, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -324,7 +348,7 @@ Q12_01 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity i
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q12_01, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -347,7 +371,7 @@ kable(Q12_01, align = c('l', 'c', 'c', 'c')) %>%
 *Consider the negative impact the pest may have on categories of ecosystem services (examples of ecosystem service under each main category are detailed in the highlighted box). The categories of ecosystem services are based on the [Millennium Ecosystem Assessment (2005)](http://www.unep.org/maweb/documents/document.356.aspx.pdf).*
 
 ```{r echo = F, comment = NULL, results='asis'}
-if (output_format == 'html') { 
+if (knitr::is_html_output()) { 
 cat('<pre class="bg-info"><code>Examples of ecosystem services to consider under each category include:\n\n*Provisioning services\t\t\t\t\t\t\t\t*Supporting services
 \tFresh water\t\t\t\t\t\t\t\t\t\t\tNutrient cycling
 \tGenetic resources\t\t\t\t\t\t\t\t\tPrimary production
@@ -389,7 +413,7 @@ Q12_02 <- read.csv('./Resources/Tables/eco_services.csv',
                header = T,
                stringsAsFactors = F)
 
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q12_02, col.names = c('Ecosystem service',
                             'Does the pest impact on this Ecosystem service?',
                             'Short description of impact',
@@ -417,7 +441,7 @@ Q12_02A <- data.frame(Rating = c('Rating of magnitude of impact on ecosystem ser
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  kable(Q12_02A, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -445,7 +469,7 @@ Q12_03 <- data.frame(Rating = c('Rating of magnitude of socio-economic impact in
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  kable(Q12_03, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -481,7 +505,7 @@ Q13_01 <- data.frame(Rating = c('Rating of magnitude of impact on biodiversity i
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q13_01, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -509,7 +533,7 @@ Q13_02 <- data.frame(Rating = c('Rating of magnitude of impact on ecosystem serv
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  kable(Q13_02, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -537,7 +561,7 @@ Q13_03 <- data.frame(Rating = c('Rating of magnitude of socio-economic impact in
                  Low = c('.','.'),      #put X in correct level between '' 
                  Moderate = c('.','.'), #first place is for magnitude, second
                  High = c('.','.'), stringsAsFactors = F)     #for uncetainity (see example Q9)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  kable(Q13_03, align = c('l', 'c', 'c', 'c')) %>%
   kable_styling(full_width = T, bootstrap_options = c('condensed', 'bordered')) %>%
   row_spec(row = 0, bold = T, background = '#f5f6fa') %>%
@@ -593,7 +617,7 @@ cat(environTable)
 *Specifically consider the influence of climate change on entry, establishment, spread and impact of the pest in the PRA area.*
 
 ```{r echo = F, comment = NULL, results='asis'}
-if (output_format == 'html') { 
+if (knitr::is_html_output()) {
 cat('<pre class="bg-info"><code>In particular, consider the following aspects:\n
 *Pathways (see point 8)\t\t\t\t\t\t\t*Spread
 *Establishment\t\t\t\t\t\t\t\t\t\tDensity dependent dispersal
@@ -628,7 +652,7 @@ Establishment\\tabto{6.8cm} *\\hspace{0.3cm}Density dependent dispersal\\newline
 *If possible, specify prospects of eradication or containment in case of an outbreak. Indicate effectiveness and feasibility of the measures*
 
 ```{r echo = F, comment = NULL, results='asis'}
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
   cat('<pre class="bg-info"><code>As described in PM 5/3 possible options for phytosanitary measures include 
 Options at the place of production
 *\tDetection of the pest at the place of production by inspection or testing
@@ -671,7 +695,7 @@ Surveillance, eradication, containment
 Q17_1 <- read.csv('./Resources/Tables/measures.csv',
                header = T,
                stringsAsFactors = F)
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 kable(Q17_1, col.names = c('Possible pathways (in order of importance)',
                            'Measures identified',
                            'Cost effectiveness of measures')) %>%
@@ -702,7 +726,7 @@ kable(Q17_1, col.names = c('Possible pathways (in order of importance)',
 *Add any other relevant information or recommendations. For example when phytosanitary measures are not considered appropriate, recommendations for the development of other control strategies can be made (e.g. Integrated Pest Management, certification schemes).*
 
 ```{r echo = F, comment = NULL, results = 'asis'}
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
  cat('<pre class="bg-warning"><code>Once the analysis has been completed, a summary should be prepared.\n(See the summary box at the beginning of the Express PRA.)</code></pre>')
 } else {
   cat('\\begin{tcolorbox}[minipage,colback=yellow!50!white,colframe=yellow!50!black,arc=8pt,outer arc=5pt]
@@ -715,7 +739,7 @@ if (output_format == 'html'){
 (@) REFERENCES:
 
 ```{r echo = F, comment = NULL, results='asis'}
-if (output_format == 'html'){
+if (knitr::is_html_output()) {
 cat('<pre class="bg-warning"><code>Provide references cited above (see Instructions for authors to the EPPO Bulletin).
 When referring to websites, include the web address and date accessed.</code></pre>')
 } else {
