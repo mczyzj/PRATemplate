@@ -27,14 +27,16 @@ keywords:
   - "Pest Risk Assessment"
   - "EPPO"
 date: "August 9, 2018^[This report was generated using R [@rcore2018] with knitr and bookdown [@xie2015; @xie2016]]"
+documentclass: article
 output:
   html_document:
     theme: cerulean  ## Comment this line when making pdf
     css: ./Resources/Styling/styles.css ## Comment this line when making pdf
     template: eppo_template
     highlight: null
-    pandoc_args:
-      - --standalone
+    pandoc_args: [
+      "--csl", "elsevier-harvard.csl",
+      "--standalone"]
   pdf_document:
     includes:
       in_header: preamble.tex
@@ -43,9 +45,9 @@ output:
     keep_tex: true
     dev: "cairo_pdf"
     latex_engine: xelatex
-    citation_package: biblatex
+    citation_package: none
+    pandoc_args: [ "--csl", "elsevier-harvard.csl"]
 bibliography: [book.bib]
-#biblio-style: apalike
 link-citations: yes
 geometry: margin=1in
 graphics: yes
@@ -62,7 +64,7 @@ library('kableExtra')
 library('magrittr')
 if(knitr::is_latex_output()) options(knitr.table.format = "latex")
 ```
-
+<!-- After filling all the document, please delete comments and instructions [usually in italics or color frames] before submitting final version  -->
 # Stage 1. Initiation
 
 Reason for performing the PRA: *(e.g. interceptions, outbreak)*
